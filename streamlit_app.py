@@ -47,7 +47,7 @@ if make_button:
         my_bar.progress(100)
         translating.markdown("Done")
         message.markdown(" ")
-        
+
     with open(st.session_state["bilingual_book_name"],"rb") as f:
         st.session_state["book"]=f.read()
     st.session_state["Translate Success"]=True
@@ -61,12 +61,11 @@ if st.session_state["Translate Success"]==True:
         for file in os.listdir(path):
             os.remove(os.path.join(path, file))
     except:
-        pass 
+        pass
 
 if st.session_state["Translate Success"]==True and st.session_state["book"] is not None:
     download_button=st.download_button(
         label="Download",
         data=st.session_state["book"],
         file_name=book_name.name.split(".")[0]+"_bilingual.epub",
-    ) 
-        
+    )

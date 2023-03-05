@@ -1,0 +1,13 @@
+#!/bin/bash
+# title: start
+# date created: "2023-03-05"
+
+echo '準備安裝…'
+python -m ensurepip --upgrade
+xcode-select --install
+pip install -r requirements.txt
+
+echo 'now run: streamlit run streamlit_app.py'
+exit 0
+
+
