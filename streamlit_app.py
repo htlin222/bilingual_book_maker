@@ -2,6 +2,7 @@ import streamlit as st
 from io import StringIO
 from make import BEPUB,GPT3,ChatGPT
 import os
+import shutil
 
 
 st.title("Bilingual Book Maker")
@@ -47,22 +48,34 @@ if make_button:
         e.make_bilingual_book()
         my_bar.progress(100)
         translating.markdown("Done")
+        print("Done")
         message.markdown(" ")
 
     with open(st.session_state["bilingual_book_name"],"rb") as f:
         st.session_state["book"]=f.read()
     st.session_state["Translate Success"]=True
 
-# delete the file
+# Save the converted book to a directory called "result" :
+# 會保留用戶檔案在result資料夾裡
 if st.session_state["Translate Success"]==True:
     try:
-        os.remove(st.session_state["bilingual_book_name"])
-        os.remove(st.session_state["original_book_name"])
-        # 删除path目录下所有文件
-        for file in os.listdir(path):
-            os.remove(os.path.join(path, file))
+        if not os.path.exists("result"):
+            os.mkdir("result")
+        new_name = st.session_state["original_book_name"].split(".")[0] + "_bilingual_result.epub"
+        shutil.copy(st.session_state["bilingual_book_name"], os.path.join("result", new_name))
     except:
         pass
+
+# delete the file: 原版的，會在下載後刪除用戶的檔案
+# if st.session_state["Translate Success"]==True:
+#     try:
+#         os.remove(st.session_state["bilingual_book_name"])
+#         os.remove(st.session_state["original_book_name"])
+#         # 删除path目录下所有文件
+#         for file in os.listdir(path):
+#             os.remove(os.path.join(path, file))
+#     except:
+#         pass
 
 if st.session_state["Translate Success"]==True and st.session_state["book"] is not None:
     download_button=st.download_button(
