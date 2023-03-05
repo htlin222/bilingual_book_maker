@@ -4,6 +4,7 @@ from abc import abstractmethod
 from copy import copy
 from os import environ as env
 
+from markdown import markdown
 import openai
 import requests
 from bs4 import BeautifulSoup as bs
@@ -96,7 +97,7 @@ class ChatGPT(Base):
                 time.sleep(3)
         except Exception as e:
             print(str(e), "will sleep 60 seconds")
-            self.message.markdown(str(e)+"will sleep 60 seconds")
+            # self.message.markdown(str(e)+"will sleep 60 seconds")
             # TIME LIMIT for open api please pay
             time.sleep(60)
             completion = openai.ChatCompletion.create(
@@ -116,7 +117,7 @@ class ChatGPT(Base):
                 .decode()
             )
         print(t_text)
-        self.message.markdown(text+"\n"+t_text)
+        # self.message.markdown(text+"\n"+t_text)
         # self.message.markdown(t_text)
         return t_text
 
@@ -142,7 +143,7 @@ class BEPUB:
             [len(bs(i.content, "html.parser").findAll("p")) for i in all_items]
         )
         print("TODO need process bar here: " + str(all_p_length))
-        self.message.markdown("TODO need process bar here: " + str(all_p_length))
+        # self.message.markdown("TODO need process bar here: " + str(all_p_length))
         index = 0
         max_progress = 20 if IS_TEST else all_p_length
         progress=0
@@ -151,7 +152,7 @@ class BEPUB:
                 soup = bs(i.content, "html.parser")
                 p_list = soup.findAll("p")
                 is_test_done = IS_TEST and (index > 20)
-                
+
                 for p in p_list:
                     if not is_test_done:
                         if p.text and not p.text.isdigit():
@@ -162,11 +163,11 @@ class BEPUB:
                             p.insert_after(new_p)
                             index += 1
                             progress+=1
-                            self.progress_bar.progress(progress/max_progress)
+                            # self.progress_bar.progress(progress/max_progress)
                             is_test_done = IS_TEST and (index > 20)
                 i.content = soup.prettify().encode()
             new_book.add_item(i)
-            
+
         name = self.epub_name.split(".")[0]
         epub.write_epub(f"{name}_bilingual.epub", new_book, {})
 
@@ -217,5 +218,5 @@ if __name__ == "__main__":
     if not options.book_name.endswith(".epub"):
         raise Exception("please use epub file")
     model = MODEL_DICT.get(options.model, "chatgpt")
-    e = BEPUB(options.book_name, model, OPENAI_API_KEY)
+    e = BEPUB(options.book_name, model, OPENAI_API_KEY,"Operation in progress. Please wait.", markdown(" "),)
     e.make_bilingual_book()
