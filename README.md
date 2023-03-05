@@ -7,11 +7,11 @@ date: "2023-03-05"
 
 # bilingual_book_maker
 
-Make bilingual epub books Using AI translate
+> Make bilingual epub books Using AI translate
 
 ![image](https://user-images.githubusercontent.com/15976103/222317531-a05317c5-4eee-49de-95cd-04063d9539d9.png)
 
-# [可到 這個 Streamit 網站測試，建議玩完就把API Revoke](https://maoyang-bilingual-book-maker-streamlit-app-in812v.streamlit.app/)
+### [可到 這個 Streamit 網站測試，建議玩完就把API Revoke](https://maoyang-bilingual-book-maker-streamlit-app-in812v.streamlit.app/)
 
 ## 本地安裝
 
