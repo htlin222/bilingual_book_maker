@@ -117,8 +117,8 @@ class ChatGPT(Base):
                 .decode()
             )
         print(t_text)
-        # self.message.markdown(text+"\n"+t_text)
-        # self.message.markdown(t_text)
+        self.message.markdown(text+"\n"+t_text)
+        self.message.markdown(t_text)
         return t_text
 
 
@@ -163,7 +163,7 @@ class BEPUB:
                             p.insert_after(new_p)
                             index += 1
                             progress+=1
-                            # self.progress_bar.progress(progress/max_progress)
+                            self.progress_bar.progress(progress/max_progress)
                             is_test_done = IS_TEST and (index > 20)
                 i.content = soup.prettify().encode()
             new_book.add_item(i)
